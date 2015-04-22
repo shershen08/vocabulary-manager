@@ -1,0 +1,8 @@
+{
+  "firebase": "PUT_YOUR_ACCOUNT_NAME",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"  ]
+}

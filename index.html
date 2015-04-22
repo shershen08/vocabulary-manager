@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="vocEverywhere">
+<head>
+  <title>vEverywhere v.{{app_version}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta charset="utf-8">
+  <link href="css/app.css" type="text/css" rel="stylesheet">
+  <link href="bower_components/dragula.js/dist/dragula.css" type="text/css" rel="stylesheet">
+  <!--<link href="app.less" type="text/css" rel="stylesheet/less">-->
+
+</head>
+<body>
+
+  <div>
+
+    <div id="content" class="container">
+      <h4 style="margin-top: 8px;" class="ng-cloak" ui-sref="home({pageNo:1})">vEverywhere v.{{app_version}}</h4>
+      <div class="row" style="margin-bottom:10px;">
+          <ul class="nav navbar-nav col-xs-12 col-sm-12 col-md-6 col-lg-4">
+               <li ui-sref-active="active" ng-show="userAutorised"><a ui-sref="home({pageNo:1})">Checklist</a></li>
+                <li ui-sref-active="active" ng-show="userAutorised"><a ui-sref="add">Add word</a></li>
+                <li ui-sref-active="active" ng-show="userAutorised"><a ui-sref="categories">Categories</a></li>
+
+                <li ui-sref-active="active" ng-show="userAutorised"><a ui-sref="profile">Profile</a></li>
+                <li ui-sref-active="active" ng-show="userAutorised"><a ui-sref="logout">Logout</a></li>
+                <li ui-sref-active="active" ng-show="!userAutorised"><a ui-sref="login">Login</a></li>
+                <li ui-sref-active="active" ng-show="!userAutorised"><a ui-sref="register">Register</a></li>
+            </ul>
+
+    </div>
+
+      <div class="row">
+
+        <div ui-view>
+
+        </div>  <!-- end UI_VIEW -->
+
+      </div>
+    </div>
+  </div>
+
+
+    <!-- JS from Bower Components -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
+  <script src="bower_components/dragula.js/dist/dragula.js"></script>
+
+ <!-- Add New Bower Component JS Above -->
+  <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+  <script src="bower_components/angularfire/dist/angularfire.js"></script>
+ 
+
+  <!-- Main App JS -->
+  <script src="app/app.js"></script>
+
+  <script src="app/profile/profileCtrl.js"></script>
+  <script src="app/profile/registerCtrl.js"></script>
+  <script src="app/edit/editCtrl.js"></script>
+  <script src="app/add/addCtrl.js"></script>
+  <script src="app/list/listCtrl.js"></script>
+  <script src="app/login/loginCtrl.js"></script>
+  <script src="app/categories/catCtrl.js"></script>
+
+  <script src="app/services.js"></script>
+  <script src="app/routes.js"></script>
+  <script src="app/directives.js"></script>
+
+</body>
+</html>

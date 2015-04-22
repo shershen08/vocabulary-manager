@@ -1,0 +1,39 @@
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+
+  <div ng-show="messageShow" class="alert alert-success" role="alert">{{message}}</div>
+
+      <form class="well well-sm">
+        <div class="form-group">
+          <label for="dutch">Dutch</label>
+          <input type="text" lang="nl" class="form-control" id="dutch" ng-model="word.text" placeholder="dutch">
+        </div>
+
+        <div class="form-group">
+          <label for="english">English</label>
+          <input type="text" lang="en" class="form-control" id="english" ng-model="word.translation" placeholder="english">
+        </div>
+
+       <div class="form-group">
+          <label for="russian">Russian</label>
+          <input type="text" lang="ru" class="form-control" id="russian" ng-model="word.translationAlt" placeholder="russian">
+        </div>
+
+         <!--  {{word | json}} -->
+
+         <button ng-click="cancelEditing()"
+                class="btn btn-default "
+                type="button">Cancel </button>
+
+        <button ng-click="deleteItem(word)"
+                class="btn btn-danger "
+                type="button">Remove </button>
+
+        <button ng-click="saveWord(word)"
+                class="btn btn-primary pull-right"
+                type="button">Save</button>
+
+
+
+      </form>
+
+ </div>

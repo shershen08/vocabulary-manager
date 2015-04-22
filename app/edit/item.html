@@ -1,0 +1,13 @@
+<div class="well well-sm"
+         ng-show="(word.show || true)"
+         ng-swipe-left="nextWord()"
+         style="text-align: center;">
+        <!-- <span class="glyphicon pull-right glyphicon-remove" ng-click="hideWord(word)"></span> -->
+        
+        <h2 class="title-word" ng-click="word.toggle = !word.toggle">{{word.text}}</h2>
+
+        <div ng-show="word.toggle">
+            <h4>{{word.translation}}</h4>
+            <h4>{{word.translationAlt || ''}}</h4>
+        </div>
+    </div>

@@ -1,0 +1,53 @@
+<div ng-controller="vocAddCtrl" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+
+ 
+
+      <form class="well well-sm">
+
+        <!-- input for new language : newLanguage -->
+        <div class="form-group">
+          <label for="newLanguage">{{::langs[setup.newLanguage]}}</label>
+          <input type="text" class="form-control" id="newLanguage"
+                ng-model="word.newLanguage"
+                placeholder="{{::langs[setup.newLanguage]}}"
+                ng-model-options="{updateOn:'default'}"
+                focus-me="focusInput">
+        </div>
+
+        <div class="form-group" ng-show="simmularWords.length">
+            <ul class="list-group">
+              <li class="list-group-item" ng-repeat="word in simmularWords"><strong class="left-50-word">{{word[setup.newLanguage]}} </strong>  {{word[setup.nativeOne] || word[setup.nativeTwo]}}</li>
+            </ul>
+        </div>        
+
+        <!-- input for new language : nativeOne -->
+        <div class="form-group">
+          <label for="nativeOne">{{::langs[setup.nativeOne]}}</label>
+          <input type="text" class="form-control" id="nativeOne" ng-model="word.nativeOne" placeholder="{{::langs[setup.nativeOne]}}">
+        </div>
+
+        <!-- input for new language : nativeTwo -->
+       <div class="form-group">
+          <label for="nativeTwo">{{::langs[setup.nativeTwo]}}</label>
+          <input type="text" class="form-control" id="nativeTwo" ng-model="word.nativeTwo" placeholder="{{::langs[setup.nativeTwo]}}">
+        </div>
+        
+         <button ng-click="addWord(word, 1)"
+                class="btn btn-default pull-right"
+                type="button">Save </button>
+        <button ng-click="addWord(word, 0)"
+                class="btn btn-primary"
+                type="button">Save and new</button>
+
+         <div ng-show="messageShow"
+               class="alert message-block-small alert-{{message.type}}"
+               role="alert"
+               ng-switch on="message.type">
+            
+            <div ng-switch-when="success"><strong>{{message.word}}</strong>{{message.text || ''}}</div>
+            <div ng-switch-when="danger">{{message.text || ''}}</div>
+          </div>
+
+      </form>
+
+ </div>

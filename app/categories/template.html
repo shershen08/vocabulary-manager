@@ -1,0 +1,36 @@
+<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+  <h2>Words</h2>
+    <!-- loading state -->
+    <div class="preload-info center-block" ng-show="!loadedData">
+      <div class="progress">
+        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"aria-valuemin="0" aria-valuemax="100" ng-style="progressState">
+        </div>
+      </div>
+      <p class="text-muted text-center-block">Loading words...</p>
+    </div>
+
+    <div id="words-container">
+        <div class="well well-sm categories-word-block"
+             ng-repeat="word in shownWords"
+             id="{{word.$id}}">
+            <div>
+              <h3 class="title-word">{{getFrom(word)}}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+  <button class="btn btn-default btn-small pull-right" ng-click="addCategory()">Add category</button>
+  <h2>Categories</h2>
+  <div ng-repeat="cat in categories" class="category-container-wrapper">
+      <span class="glyphicon pull-right glyphicon glyphicon-resize-vertical"
+            ng-click="hideCategory(cat)"></span>
+            <!-- ng-class="{glyphicon-chevron-down : cat.show}" -->
+      <div class="category-title">{{cat.title}}</div> 
+
+      <div class="category-container" id="{{cat.id}}" ng-show="cat.show"></div>
+  </div>
+
+</div>
+          

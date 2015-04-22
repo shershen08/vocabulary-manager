@@ -1,0 +1,75 @@
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+
+<!-- loading state -->
+<div class="preload-info center-block" ng-show="!loadedData">
+  <div class="progress">
+    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"aria-valuemin="0" aria-valuemax="100" ng-style="progressState">
+    </div>
+  </div>
+  <p class="text-muted text-center-block">Loading words...</p>
+</div>
+
+<!-- main UI -->
+<div class="well well-sm" style="text-align:center;" ng-show="loadedData">
+  <h5>Total: {{pgn.totalItems}}
+    <span ng-click="switchLangs()">|  {{setup[langFrom]}} > {{setup[langTo]}}</span>
+  </h5>
+
+  <!-- order filter -->
+  <select ng-model="itemsOrder" ng-options="o.title for o in filterOption"></select>
+
+</div>
+
+{{itemsOrder}}
+<nav class="text-center-block">
+  <ul class="pagination">
+    <li ui-sref-active="active" ng-repeat="n in [] | range:pgn.pageLength">
+      <a ui-sref="home({pageNo:n, sortingOrder:itemsOrder.name})">{{n}}</a>
+    </li>
+  </ul>
+</nav>
+
+
+ <ul class="ng-cloak word-items-list">
+    <li class="list-unstyled"
+        ng-repeat="word in shownWords | orderBy : itemsOrder.name">
+
+    <div class="well well-sm single-word-block"
+         ng-show="!word.hide"
+         ng-swipe-left="hideWord(word)">
+
+        <span class="pull-right glyphicon glyphicon-remove" ng-click="hideWord(word)"></span>
+
+        
+        <div class="main-block-info">
+          <h2 class="title-word" ng-click="markWord(word)">{{getFrom(word)}}</h2>
+
+          <div ng-show="word.toggle">
+              <h4>{{getTo(word)}}</h4>
+              <h4>{{getToAlt(word)}}</h4>
+          </div>
+        </div>
+
+        <div class="utilities-small">
+          <hr>
+          <!-- <a ui-sref="item({itemID : word.$id})">Open</a> -->
+          <a ui-sref="edit({itemID : word.$id})" class="pull-right">Edit</a>
+        </div>
+    </div>
+
+    
+    </li>
+  </ul>
+
+
+
+<nav class="text-center-block">
+  <ul class="pagination">
+    <li ui-sref-active="active" ng-repeat="n in [] | range:pgn.pageLength">
+      <a ui-sref="home({pageNo:n, sortingOrder:itemsOrder.name})">{{n}}</a>
+    </li>
+  </ul>
+</nav>
+
+</div>
+          
