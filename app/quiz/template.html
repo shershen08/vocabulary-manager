@@ -1,0 +1,30 @@
+<!-- Quiz template -->
+<div ng-controller="vocQuizCtrl" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+
+  <div class="well well-sm single-word-block-paged"
+         ng-show="!word.hide"
+         ng-swipe-left="hideWord(word)">
+
+          <div class="">
+            {{counter.correct}} / {{counter.wrong}}
+          </div>
+        
+        <div class="main-block-info">
+          <h2 class="title-word learning-word-display" ng-click="getAnotherRandom()">{{showWord.NL}}</h2>
+        </div>
+
+        <p>Select the correct answer</p>
+
+        <ul class="list-group">
+          <li ng-repeat="line in answerOptions"
+              class="list-group-item answer-option"
+              ng-class="{selected : (line.$id == selectedID), correct: correctAnswer}"
+              ng-click="setAnswer(line)">{{line.EN}} / {{line.RU}}
+            </li>
+        </ul>
+
+      
+    </div>
+
+ 
+</div>

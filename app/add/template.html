@@ -1,6 +1,7 @@
-<div ng-controller="vocAddCtrl" class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 
- 
+<!-- Add word template -->
+
+<div ng-controller="vocAddCtrl" class="col-xs-12 col-sm-12 col-md-6 col-lg-4"> 
 
       <form class="well well-sm">
 
@@ -14,11 +15,34 @@
                 focus-me="focusInput">
         </div>
 
-        <div class="form-group" ng-show="simmularWords.length">
+
+
+
+        <div class="form-group my-vocabulary-results"
+             ng-show="simmularWords.length">
             <ul class="list-group">
               <li class="list-group-item" ng-repeat="word in simmularWords"><strong class="left-50-word">{{word[setup.newLanguage]}} </strong>  {{word[setup.nativeOne] || word[setup.nativeTwo]}}</li>
             </ul>
-        </div>        
+        </div>       
+
+         <button type="button"
+                  class="btn btn-primary"
+                  ng-show="word.newLanguage.length > 2"
+                  ng-click="getTranslation()">Get translation</button>
+
+
+
+
+         <div class="form-group translation-results"
+              ng-show="translationResults.result">
+           <label for="nativeOne"><i>{{translationResults.statusText}} </i>:</label>
+           {{translationResults.result}} 
+
+           <button type="button"
+                  ng-show="translationResults.status>0"
+                  class="btn btn-default btn-sm"
+                  ng-click="copyTranslation()">Add</button>
+        </div>   
 
         <!-- input for new language : nativeOne -->
         <div class="form-group">

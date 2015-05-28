@@ -1,0 +1,34 @@
+ <div class="btn-group" role="group">
+
+ <!--    <button type="button"
+    class="btn btn-info">{{pgn.totalItems}}</button> -->
+
+    <button type="button"
+            ng-click="switchLangs()"
+            class="btn btn-info">{{setup[langFrom]}}</button>
+ <!-- <span class="glyphicon glyphicon-refresh"></span> <del>{{setup[langTo]}}</del> -->
+
+    
+    <button type="button"
+            class="btn btn-default"
+            ng-class="{active : (sorttype == 'random')}"
+            ng-click="changeOrder('random')">
+        <span class="glyphicon glyphicon-sort"></span>
+            Random
+    </button>
+    <button type="button"
+            class="btn btn-default"
+            ng-class="{active : (sorttype == 'name')}"
+            ng-click="changeOrder('name')">
+        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+            Name
+    </button>
+
+    <button type="button"
+            class="btn btn-default"
+            ng-class="{active : (sorttype == 'points')}"
+            ng-click="changeOrder('points')">
+        <span class="glyphicon glyphicon-sort-by-order"></span>
+            Points
+    </button>
+  </div>

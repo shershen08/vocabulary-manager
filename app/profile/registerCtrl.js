@@ -1,16 +1,25 @@
 
 /**
- * 
+ * @file 
  * @constructor
+ * 
  */
 
-vocApp.controller('vocRegisterCtrl', ['$scope', '$rootScope', '$state', '$firebaseAuth', 'userData',
-                            function($scope, $rootScope, $state, $firebaseAuth, userData){
+vocApp.controller('vocRegisterCtrl', ['$scope',
+                                      '$rootScope',
+                                      '$state',
+                                      '$firebaseAuth',
+                                      'userData',
+                            function($scope,
+                                      $rootScope,
+                                      $state,
+                                      $firebaseAuth,
+                                      userData){
 
     var ref = userData.authRef();
     $scope.authObj = $firebaseAuth(ref);
 
-    if($rootScope.userAutorised) $state.go('profile');
+    if($rootScope.userAutorised) $state.go('app.profile');
 
 
 
@@ -23,7 +32,7 @@ vocApp.controller('vocRegisterCtrl', ['$scope', '$rootScope', '$state', '$fireba
 
            userData.addUser(authData);
           
-           $state.go('profile', { userID: authData.uid});
+           $state.go('app.profile', { userID: authData.uid});
 
         }).catch(function(error) {
           console.error("Authentication failed:", error);

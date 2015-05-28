@@ -1,6 +1,18 @@
 
 
-vocApp.controller('vocListCtrl', ['$scope', '$timeout','wordsData', 'wordListTools', '$stateParams', '$state', 'APP_SETUP',
+/**
+ * @file 
+ * @constructor
+ * 
+ */
+
+vocApp.controller('vocListCtrl', ['$scope',
+                                  '$timeout',
+                                  'wordsData',
+                                  'wordListTools', 
+                                  '$stateParams',
+                                  '$state',
+                                  'APP_SETUP',
   function($scope,
           $timeout,
           wordsData,
@@ -13,7 +25,7 @@ vocApp.controller('vocListCtrl', ['$scope', '$timeout','wordsData', 'wordListToo
     // Pagination
     //
     $scope.pgn = {
-        curPage   : $stateParams.pageNo, //1 .....
+        curPage   : parseInt($stateParams.pageNo), //1 .....
         startElem : APP_SETUP.itemsPP*($stateParams.pageNo-1),
         endElem   : APP_SETUP.itemsPP*$stateParams.pageNo
     }
@@ -27,31 +39,14 @@ vocApp.controller('vocListCtrl', ['$scope', '$timeout','wordsData', 'wordListToo
         $scope.progressState = {width : '80%'};
     }, 1000);
 
+    $scope.sorttype = $stateParams.sortingOrder;
+
 
     //
     // Sorting order
     //
 
-   $scope.filterOption = [
-                        {name:'random', title:'Random'},
-                        {name:'createDate', title:'By date added'},
-                        {name:'newLanguage', title:'By NL alpabetically'},
-                        {name:'nativeOne', title:'By En alpabetically'}
-                      ];  
-                            
-    if($stateParams.sortingOrder){
-      $scope.itemsOrder = {name : $stateParams.sortingOrder, title:$stateParams.sortingOrder};
-    } else {
-      $scope.itemsOrder = $scope.filterOption[1];
-    }
-
-       $scope.$watch('itemsOrder', function(newval){
-        
-        if(newval.name == 'random') {
-          $scope.allWordsReady = wordListTools.randomizeList($scope.allWordsReady);
-        } 
-
-     });    
+  
 
     
 
@@ -68,8 +63,10 @@ vocApp.controller('vocListCtrl', ['$scope', '$timeout','wordsData', 'wordListToo
       //new request
         wordsData.getList().then(function(list){
         
-        $scope.allWordsReady = list;
-        $scope.pgn.totalItems = $scope.allWordsReady.length;
+        $scope.pgn.totalItems = list.length;
+
+        //applying sorting
+        $scope.allWordsReady = list.sort($scope.setSorting());
 
         $scope.shownWords = $scope.allWordsReady.slice($scope.pgn.startElem, $scope.pgn.endElem);
         $scope.loadedData = true;
@@ -80,7 +77,76 @@ vocApp.controller('vocListCtrl', ['$scope', '$timeout','wordsData', 'wordListToo
 
      }         
 
-      
+     /**
+     * Only changing the state params
+     */
+     $scope.changeOrder = function(param){
+
+            $state.go('app.home', {sortingOrder: param});
+    }
+
+
+     /*
+       {
+          $$hashKey: "object:99"
+          $id: "-Jm4VGvH_sOBREfG09gX"
+          $priority: null
+          EN: {String},
+          NL: {String},
+          RU: {String},
+          stats { closed: {Number},
+                  opened: {Number}
+                } 
+        }
+     */
+      $scope.setSorting = function (a,b){
+
+        var resultingSort;
+
+          switch ($stateParams.sortingOrder) {
+
+            /** Order by random */
+            case 'random':
+
+              resultingSort = function(a,b){
+                return (a.$id > b.$id);
+              }
+
+              break;
+
+            /** Order by Dutch word name */
+            case 'name':
+
+              resultingSort = function(a,b){
+                return a.NL.localeCompare(b.NL);
+              }
+
+              break;
+
+            /** Order by number of points */
+            case 'points':
+
+              resultingSort = function(a,b){
+                return (((a.stats) ? a.stats.opened : 0) 
+                        - ((b.stats) ? b.stats.opened : 0));
+              }
+
+              break;
+
+            default:
+              
+             resultingSort = function(a,b){
+                return (a.opened - b.opened);
+              }
+
+
+              break;
+          }
+
+
+        return resultingSort;
+      }
+    
                               
     /*
 

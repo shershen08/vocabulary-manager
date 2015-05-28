@@ -3,9 +3,64 @@
  * @author 
  */
  
+vocApp.service('translateWord',
+              ['$http',
+               '$q',
+               function($http,
+                        $q){
 
-var MY_FIREBASE_URL = 'PUT_YOUR_ACCOUNT_NAME';
-//usually smth like abulabi-balmule-2929.firebaseio.com
+  /**
+  *  https://tech.yandex.com/translate/doc/dg/reference/translate-docpage/
+  *
+  **/
+
+  this.setApiKey = function(key){
+    this.key = key;
+  }
+
+
+  this.getWord = function(wordToTranslate) {
+
+      var key = this.key,
+            lang = 'nl-ru',
+            deferred = $q.defer(),
+            
+            url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + 
+                         key + '&lang=' + lang + '&text=' + wordToTranslate;
+
+            $http.get(url).success(function (data) {
+                  
+                  var result = {};
+
+                  if(data.text[0] == wordToTranslate){
+
+                    result =  {"result": data.text[0],
+                               "statusText": "Not found",
+                              "status": 0};
+
+                  } else {
+
+                    result =  {"result": data.text[0],
+                                "statusText": "Translated",
+                                "status": 1};
+
+                  }
+
+
+                deferred.resolve(result);
+            })
+
+            return deferred.promise;
+     
+  };
+
+}]);
+
+
+
+
+var MY_FIREBASE_URL = 'PUT_FIREBASE_APP_URL_HERE';
+
 
 
 vocApp.factory('wordListTools', function(){
@@ -45,7 +100,10 @@ vocApp.factory('wordListTools', function(){
 })
 
 
-vocApp.service('categoryData', ['$firebaseArray', '$q', function($firebaseArray, $q){
+vocApp.service('categoryData', ['$firebaseArray',
+                                '$q',
+                                function($firebaseArray,
+                                          $q){
 
     this.ref = new Firebase(MY_FIREBASE_URL + "/categories");
     this.cache = {};
@@ -71,7 +129,10 @@ almost ready script for title movign - do with angular!
 
 
 
-vocApp.service('userData', ['$firebaseArray', '$q', function($firebaseArray, $q){
+vocApp.service('userData', ['$firebaseArray',
+                            '$q',
+                            function($firebaseArray,
+                                    $q){
 
     this.ref = new Firebase(MY_FIREBASE_URL + "/users");
     this.cache = {};
@@ -116,7 +177,10 @@ vocApp.service('userData', ['$firebaseArray', '$q', function($firebaseArray, $q)
     }
 }])
 
-vocApp.service('wordsData', ['$firebaseArray', '$q', function($firebaseArray, $q){
+vocApp.service('wordsData', ['$firebaseArray',
+                              '$q',
+                              function($firebaseArray,
+                                      $q){
 
     this.ref = new Firebase(MY_FIREBASE_URL + "/words");
 

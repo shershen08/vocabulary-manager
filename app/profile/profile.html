@@ -1,23 +1,37 @@
+<!-- Profile template -->
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
     
     <!-- if provider  == google -->
     <div ng-show="userData.google">
-        <h2>Hello {{userData.google.displayName}}</h2>
-        <div class="well well-sm">
+        <h2>Hello, {{userData.google.displayName}}</h2>
+        <div class="well well-sm row">
 
-            <img ng-src="userData.google.picture" class="user-image img-thumbnail">
-            <br><a href="{{userData.google.link}}">G+ profile</a>
-            <br> Registered: {{userData.Created || 'Unknown'}}
+            <div class="col-md-6">
+              <img ng-src="{{userData.google.cachedUserProfile.picture}}" class="user-image img-thumbnail">
+            </div>
+            <div class="col-md-6">
+              <a href="{{userData.google.cachedUserProfile.link}}" target="_blank">G+ profile</a>
+              <br> Registered: {{userData.Created || 'Unknown'}}
+            </div>
         </div>
     </div>
 
     <!-- TODO: if provider == facebook -->
 
     
-    <h3>Statistics</h3>
-        //todo
+    <!-- <h4>Statistics</h4>
+        //todo -->
+
+    <h4>Export all the words</h4>
+        <button type="button"
+                class="btn btn-primary"
+                ng-click="exportWords()"><span class="glyphicon glyphicon-floppy-save"></span> Save all words in txt</button>
+
+
+    <h4>External API for translation</h4>
+        <label><input type="checkbox" checked disabled> Yandex Translate API</label>
 <br><br>
-    <h3>Settings</h3>
+    <h4>Settings</h4>
 
     <ul class="list-group">
       <li class="list-group-item">
@@ -27,12 +41,24 @@
       </li>
 
     </ul>  
-    <h4>Categories</h4>      
-    <input type="text"><button>Add</button>
+    <h4>Categories</h4>
+   <form class="navbar-form navbar-left word-search-tabbar"
+          role="search"
+           ng-show="userAutorised">
+
+           <div class="form-group">
+          <input type="text"
+                  class="form-control"
+                  placeholder="Search"
+                  ng-model="searchWord">
+          <button type="button" class="btn btn-default">Add</button>
+        </div>
+    </form>
+
     <ul>
-        <li ng-repeat="cat in category"></li>
+        <li ng-repeat="cat in categories"> {{cat.title}} <span class="pull-right glyphicon glyphicon-remove" ng-click="hideWord(word)"></span></li>
     </ul>
 
-    <button ng-click="logout()" class="btn btn-default" type="button">Logout</button>
+    <button ui-sref="app.logout" class="btn btn-default" type="button">Logout</button>
 </div>
 

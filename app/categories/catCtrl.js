@@ -1,12 +1,20 @@
 
+/**
+ * @file 
+ * @constructor
+ * 
+ */
 
 vocApp.controller('vocCatCtrl', ['$scope',
                                 '$timeout',
+                                '$rootScope',
                                 '$document',
                                 'wordsData',
-                                '$state', 'APP_SETUP',
+                                '$state',
+                                'APP_SETUP',
   function($scope,
           $timeout,
+          $rootScope,
           $document,
           wordsData,
           $state,
@@ -22,36 +30,7 @@ vocApp.controller('vocCatCtrl', ['$scope',
     }, 1000);
 
 
-    $scope.categories = [{
-                          'title' : 'Verbs',
-                          'id'    : 2,
-                          'show'  : true
-                        },
-                        {
-                          'title' : 'Nature',
-                          'id'    : 3,
-                          'show'  : true
-                        },
-                        {
-                          'title' : 'Basic',
-                          'id'    : 5,
-                          'show'  : true  
-                        },
-                        {
-                          'title' : 'Objects',
-                          'id'    : 6,
-                          'show'  : true  
-                        },
-                        {
-                          'title' : 'Phrases',
-                          'id'    : 4,
-                          'show'  : true  
-                        },
-                        {
-                          'title' : 'Reading',
-                          'id'    : 1,
-                          'show'  : true  
-                        }];
+    $scope.categories =  $rootScope.cats;
    
     
     //

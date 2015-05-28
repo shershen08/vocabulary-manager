@@ -1,13 +1,18 @@
 
 
-
 /**
- * 
+ * @file
  * @constructor
  */
 
-vocApp.controller('vocOneEditCtrl', ['$scope', 'wordsData', '$stateParams', '$state', 
-                            function($scope, wordsData, $stateParams, $state){
+vocApp.controller('vocOneEditCtrl', ['$scope',
+                                      'wordsData',
+                                      '$stateParams',
+                                      '$state', 
+                            function($scope,
+                                    wordsData,
+                                    $stateParams,
+                                    $state){
 
     $scope.messageShow = false;                      
     /*
@@ -20,15 +25,15 @@ vocApp.controller('vocOneEditCtrl', ['$scope', 'wordsData', '$stateParams', '$st
 
 
          $scope.cancelEditing = function(){
-            $state.go('home', {pageNo:1});
+            $state.go('app.home', {pageNo:1});
          }  
 
 
           $scope.deleteItem = function(){
             
             list.$remove($scope.word).then(function(ref) {
-              console.info('Item "' + $scope.word.text + '" removed');
-              $state.go('add');
+              console.info('Item "' + $scope.word.NL + '" removed');
+              $state.go('app.add');
             });
 
          }   
@@ -36,8 +41,8 @@ vocApp.controller('vocOneEditCtrl', ['$scope', 'wordsData', '$stateParams', '$st
          $scope.saveWord = function(wordObj){
 
               list.$save($scope.word).then(function(ref) {
-                console.info('Item "' + $scope.word.text + '" modifyed'); 
-                $scope.updateMsg($scope.word.text);
+                console.info('Item "' + $scope.word.NL + '" modifyed'); 
+                $scope.updateMsg($scope.word.NL);
                 
               });
          }     

@@ -5,20 +5,34 @@
       <form class="well well-sm">
         <div class="form-group">
           <label for="dutch">Dutch</label>
-          <input type="text" lang="nl" class="form-control" id="dutch" ng-model="word.text" placeholder="dutch">
+          <input type="text" lang="nl"
+                class="form-control"
+                id="dutch"
+                ng-model="word.NL"
+                placeholder="dutch">
         </div>
 
         <div class="form-group">
           <label for="english">English</label>
-          <input type="text" lang="en" class="form-control" id="english" ng-model="word.translation" placeholder="english">
+          <input type="text"
+                lang="en"
+                class="form-control"
+                id="english"
+                ng-model="word.EN"
+                placeholder="english">
         </div>
 
        <div class="form-group">
           <label for="russian">Russian</label>
-          <input type="text" lang="ru" class="form-control" id="russian" ng-model="word.translationAlt" placeholder="russian">
+          <input type="text"
+                lang="ru"
+                class="form-control"
+                id="russian"
+                ng-model="word.RU"
+                placeholder="russian">
         </div>
 
-         <!--  {{word | json}} -->
+          <!-- {{word | json}} -->
 
          <button ng-click="cancelEditing()"
                 class="btn btn-default "

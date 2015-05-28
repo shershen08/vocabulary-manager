@@ -1,15 +1,22 @@
 
 /**
- * 
+ * @file
  * @constructor
  */
 
-vocApp.controller('vocAddCtrl', ['$scope', '$timeout','$state', 'wordListTools', 'wordsData', 'APP_SETUP', 
+vocApp.controller('vocAddCtrl', ['$scope', 
+                                 '$timeout',
+                                 '$state',
+                                 'wordListTools',
+                                 'wordsData',
+                                 'translateWord',
+                                 'APP_SETUP', 
     function($scope,
             $timeout,
             $state,
             wordListTools,
             wordsData,
+            translateWord,
             APP_SETUP){
 
     $scope.message = {};
@@ -36,11 +43,17 @@ vocApp.controller('vocAddCtrl', ['$scope', '$timeout','$state', 'wordListTools',
 
 
 
+   translateWord.setApiKey(APP_SETUP.YAPI.key);
+
+
+
+
 
   $scope.$watch('word.newLanguage', function(newVal){
     
     if (!newVal || newVal.length < 3) {
-      $scope.simmularWords = []
+      $scope.simmularWords = [];
+      $scope.translationResults = '';
       return;
     }
 
@@ -51,6 +64,21 @@ vocApp.controller('vocAddCtrl', ['$scope', '$timeout','$state', 'wordListTools',
   })
 
 
+
+  $scope.getTranslation = function(){
+
+    translateWord.getWord($scope.word.newLanguage).then(function(res){
+
+         $scope.translationResults = res;
+
+    })
+  }
+
+  $scope.copyTranslation = function(){
+
+    $scope.word.nativeTwo = $scope.translationResults.result;
+
+  }
 
 
   /**
@@ -76,9 +104,9 @@ vocApp.controller('vocAddCtrl', ['$scope', '$timeout','$state', 'wordListTools',
         } 
 
         var obj = {};
-        obj[APP_SETUP.setup.newLanguage] = item.newLanguage;
-        obj[APP_SETUP.setup.nativeOne] = item.nativeOne || '';
-        obj[APP_SETUP.setup.nativeTwo] = item.nativeTwo || '';
+        obj[APP_SETUP.setup.newLanguage] = item.newLanguage.toLowerCase();
+        obj[APP_SETUP.setup.nativeOne] = item.nativeOne.toLowerCase() || '';
+        obj[APP_SETUP.setup.nativeTwo] = item.nativeTwo.toLowerCase() || '';
         obj['createDate'] = Date();
 
         $scope.words.$add(obj);

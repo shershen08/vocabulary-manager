@@ -1,3 +1,6 @@
+
+<!-- List template -->
+
 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
 
 <!-- loading state -->
@@ -10,39 +13,33 @@
 </div>
 
 <!-- main UI -->
-<div class="well well-sm" style="text-align:center;" ng-show="loadedData">
-  <h5>Total: {{pgn.totalItems}}
-    <span ng-click="switchLangs()">|  {{setup[langFrom]}} > {{setup[langTo]}}</span>
-  </h5>
+<div style="text-align:center;" ng-show="loadedData">
 
   <!-- order filter -->
-  <select ng-model="itemsOrder" ng-options="o.title for o in filterOption"></select>
+  <!-- <select ng-model="itemsOrder" ng-options="o.title for o in filterOption"></select> -->
+
+  <div ng-include="'app/template/ordering-items.html'"></div>
+ <div ng-include="'app/template/pagination.html'"></div>
 
 </div>
 
-{{itemsOrder}}
-<nav class="text-center-block">
-  <ul class="pagination">
-    <li ui-sref-active="active" ng-repeat="n in [] | range:pgn.pageLength">
-      <a ui-sref="home({pageNo:n, sortingOrder:itemsOrder.name})">{{n}}</a>
-    </li>
-  </ul>
-</nav>
+<!-- itemsOrder -->
+
 
 
  <ul class="ng-cloak word-items-list">
     <li class="list-unstyled"
-        ng-repeat="word in shownWords | orderBy : itemsOrder.name">
+        ng-repeat="word in shownWords">
 
     <div class="well well-sm single-word-block"
-         ng-show="!word.hide"
+         ng-show="(!word.hide && getFrom(word) != '')"
          ng-swipe-left="hideWord(word)">
 
         <span class="pull-right glyphicon glyphicon-remove" ng-click="hideWord(word)"></span>
 
         
         <div class="main-block-info">
-          <h2 class="title-word" ng-click="markWord(word)">{{getFrom(word)}}</h2>
+          <h2 class="title-word learning-word-display" ng-click="markWord(word)">{{getFrom(word)}}</h2>
 
           <div ng-show="word.toggle">
               <h4>{{getTo(word)}}</h4>
@@ -53,7 +50,7 @@
         <div class="utilities-small">
           <hr>
           <!-- <a ui-sref="item({itemID : word.$id})">Open</a> -->
-          <a ui-sref="edit({itemID : word.$id})" class="pull-right">Edit</a>
+          <a ui-sref="app.edit({itemID : word.$id})" class="pull-right">Edit</a>
         </div>
     </div>
 
@@ -61,15 +58,7 @@
     </li>
   </ul>
 
+ <div ng-show="loadedData"
+      ng-include="'app/template/pagination.html'"></div>
 
-
-<nav class="text-center-block">
-  <ul class="pagination">
-    <li ui-sref-active="active" ng-repeat="n in [] | range:pgn.pageLength">
-      <a ui-sref="home({pageNo:n, sortingOrder:itemsOrder.name})">{{n}}</a>
-    </li>
-  </ul>
-</nav>
-
-</div>
-          
+</div>    

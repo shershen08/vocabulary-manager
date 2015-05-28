@@ -8,56 +8,125 @@ vocApp.config(function($stateProvider, $urlRouterProvider) {
     /* Add New States Above */
     $urlRouterProvider.otherwise('/home');
 
+    //viewName@stateName
 
-     $stateProvider
-        .state("home", {
-          url: "/home/page:{pageNo}/sortby:{sortingOrder}",
-          controller : 'vocListCtrl',
-          templateUrl: 'app/list/template.html'
+  $stateProvider.state('app', {
+      abstract: true,
+      views: {
+         page: {
+           template: '<h2>Welcome to vocApp!</h2>'
+         },
+         
+         '': {
+           template: ''
+         },
+         
+         wrapper: {
+           templateUrl: 'app/template/headermenu.html'
+         }
+       
+      }
+    }).state("app.home", {
+       url: "/home/page:{pageNo}/sortby:{sortingOrder}",
+       views: {
+            'page@': {
+                templateUrl: 'app/list/template.html',
+                controller: 'vocListCtrl'
+            }
+          }
         })
-        .state("add", {
+        .state("app.add", {
           url: "/add",
-          controller : 'vocAddCtrl',
-          templateUrl: 'app/add/template.html'
+          views : {
+            "page@" : {
+                  controller : 'vocAddCtrl',
+                  templateUrl: 'app/add/template.html'
+          }
+        }
+        
+        })
+        .state("app.quiz", {
+          url: "/quiz",
+          views : {
+            "page@" : {
+                  controller : 'vocQuizCtrl',
+                  templateUrl: 'app/quiz/template.html'
+            }
+        }
         })
         
-        .state("edit", {
+        .state("app.edit", {
           url: "/edit/{itemID}",
-          controller : 'vocOneEditCtrl',
-          templateUrl: 'app/edit/template.html'
+          views : {
+            "page@" : {
+                  controller : 'vocOneEditCtrl',
+                  templateUrl: 'app/edit/template.html'
+            }
+        }
         })
-        .state("item", {
+        .state("app.item", {
           url: "/item/{itemID}",
-          controller : 'vocOneCtrl',
-          templateUrl: 'app/edit/item.html'
+          views : {
+            "page@" : {
+                  controller : 'vocOneCtrl',
+                  templateUrl: 'app/edit/item.html'
+            }
+          }
         })
-        .state("profile", {
+        .state("app.profile", {
           url: "/profile/{userID}",
-          controller : 'vocProfileCtrl',
-          templateUrl: 'app/profile/profile.html'
+          views : {
+            "page@" : {
+                controller : 'vocProfileCtrl',
+                templateUrl: 'app/profile/profile.html'
+          }
+        }
         })
-        .state("login", {
+        .state("app.login", {
           url: "/login",
-          controller : 'vocLoginCtrl',
-          templateUrl: 'app/login/login.html'
+           views : {
+            "page@" : {
+                controller : 'vocLoginCtrl',
+                templateUrl: 'app/login/login.html'
+              }
+          } 
         })
-        .state("categories", {
+        .state("app.categories", {
           url: "/categories",
-          controller : 'vocCatCtrl',
-          templateUrl: 'app/categories/template.html'
+           views : {
+            "page@" : {
+              controller : 'vocCatCtrl',
+              templateUrl: 'app/categories/template.html'
+            }
+          }
         })
-          .state("logout", {
+          .state("app.logout", {
           url: "/logout",
-          controller : function($rootScope, $scope, $state){
+          controller : function($rootScope, $scope, $state, $firebaseAuth){
+
+            var MY_FIREBASE_URL = 'PUT_FIREBASE_APP_URL_HERE';
+
+            var ref = new Firebase(MY_FIREBASE_URL);
+            $scope.authObj = $firebaseAuth(ref);
 
               $rootScope.userAutorised = false;
-              $state.go('register');
+              $rootScope.userData = '';
+              
+              $scope.authObj.$unauth();
+
+              $state.go('app.register');
 
           }
         })
-            .state("register", {
+            .state("app.register", {
           url: "/register",
+          views : {
+            "page@" : {
           controller : 'vocRegisterCtrl',
           templateUrl: 'app/profile/register.html'
+        }
+      }
         })
+
+
 });

@@ -1,0 +1,36 @@
+<nav class="text-center-block ng-cloak">
+  <ul class="pagination">
+
+    <li ui-sref-active="active">
+      <a ui-sref="app.home({pageNo:1})">
+        <span class="glyphicon glyphicon-backward"></span>
+      </a>
+
+    </li>
+    <li ui-sref-active="active">
+      <a ui-sref="app.home({pageNo:pgn.curPage-1})">{{(pgn.curPage-1)}} 
+        <span class="glyphicon glyphicon-chevron-left"></span>
+         </a>
+
+    </li>
+    <li class="disabled">
+      <span>
+        <span aria-hidden="true"> {{pgn.curPage}} of {{pgn.pageLength}}</span>
+      </span>
+    </li>
+    <li ui-sref-active="active">
+      <a ui-sref="app.home({pageNo:pgn.curPage+1})">
+        <span class="glyphicon glyphicon-chevron-right"></span> 
+        {{(pgn.curPage+1)}}
+      </a>
+      
+    </li>
+
+     <li ui-sref-active="active">
+      <a ui-sref="app.home({pageNo:(pgn.pageLength-1)})">
+        <span class="glyphicon glyphicon-fast-forward"></span>
+      </a>
+      
+    </li>
+  </ul>
+</nav>

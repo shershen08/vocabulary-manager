@@ -38,6 +38,8 @@ names of the fileds in template layer:
 
 ###Todo's
 
+* RequireJS modiules ang Grunt-powered build
+*
 * LocalStorage
 * Categories
 * Statistics
